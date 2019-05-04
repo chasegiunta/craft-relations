@@ -33,6 +33,7 @@ class Relations extends Field
      * @var mixed Target field setting
      */
     public $targetFields = '*';
+    public $targetTypes = '*';
 
 
     // Static Methods
@@ -57,7 +58,7 @@ class Relations extends Field
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        return RelationsPlugin::$plugin->relations->get($element, $this->targetFields);
+        return RelationsPlugin::$plugin->relations->get($element, $this->targetTypes, $this->targetFields);
     }
 
     /**
@@ -67,6 +68,7 @@ class Relations extends Field
     {
         $attributes = parent::settingsAttributes();
         $attributes[] = 'targetFields';
+        $attributes[] = 'targetTypes';
         return $attributes;
     }
 
@@ -90,11 +92,20 @@ class Relations extends Field
             }
         }
 
+        $types = [
+            'Entry' => 'Entry',
+            'Asset' => 'Asset',
+            'User' => 'User',
+            'Category' => 'Category',
+            'Tag' => 'Tag'
+        ];
+
         // Add "field" select template
         return $fieldSelectTemplate = Craft::$app->view->renderTemplate(
             'relations/_settings',
             [
                 'fields' => $fields,
+                'types' => $types,
                 'settings' => $this->getSettings(),
             ]
         );
@@ -115,7 +126,7 @@ class Relations extends Field
         $relations = $value;
         if ( !$relations )
         {
-            $relations = RelationsPlugin::$plugin->relations->get($element, $this->targetFields);
+            $relations = RelationsPlugin::$plugin->relations->get($element, $this->targetTypes, $this->targetFields);
         }
 
         return $view->renderTemplate('relations/fields/relations/_input', [

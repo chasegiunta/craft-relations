@@ -21,7 +21,7 @@ use nav33d\relations\Relations as RelationsPlugin;
 class Relations extends Component
 {
 
-    public function get($element, $targetFields)
+    public function get($element, $targetTypes, $targetFields)
     {
         $relatedElements = [];
 
@@ -57,7 +57,13 @@ class Relations extends Component
             if( !$relatedElement )
             {
                 continue;
-            } 
+            }
+
+            if($targetTypes != '*') {
+                if (!in_array($relatedElement->displayName(), $targetTypes)) {
+                    continue;
+                }
+            }
             
             if ( method_exists($relatedElement, 'getOwner') && $relatedElement->getOwner() )
             {
