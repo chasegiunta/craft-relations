@@ -129,8 +129,14 @@ class Relations extends Field
             $relations = RelationsPlugin::$plugin->relations->get($element, $this->targetTypes, $this->targetFields);
         }
 
+        $showType = true;
+        if ($this->targetTypes != '*' && count($this->targetTypes) == 1) {
+            $showType = false;
+        }
+
         return $view->renderTemplate('relations/fields/relations/_input', [
             'relations' => $relations,
+            'showType' => $showType
         ]);
     }
 

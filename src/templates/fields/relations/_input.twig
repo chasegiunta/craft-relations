@@ -18,14 +18,18 @@
   <table class="data fullwidth collapsible">
     <tr>
       <th class="light">Title</th>
-      <th class="light">Type</th>
+      {% if showType == true %}
+        <th class="light">Type</th>
+      {% endif %}
       <th class="light">Link</th>
     </tr>
     {% for item in relations %}
       {% set title = item.title ?? item.username ?? null %}
       <tr>
           <td>{{ title }}</td>
-          <td>{{ item.displayName() ?? "Unknown" }}</td>
+          {% if showType == true %}
+            <td>{{ item.displayName() ?? "Unknown" }}</td>
+          {% endif %}
           <td>
             {% if item.getCpEditUrl() %} 
               <a href="{{ item.getCpEditUrl() }}">Show</a>
