@@ -7,7 +7,8 @@
     name: 'targetTypes',
     options: types,
     showAllOption: true,
-    values: settings.targetTypes
+    values: settings.targetTypes,
+    required: true
 })}}
 
 {{ forms.checkboxSelectField({
@@ -17,5 +18,6 @@
     name: 'targetFields',
     options: fields,
     showAllOption: true,
-    values: settings.targetFields
+    values: settings.targetFields,
+    required: true
 })}}

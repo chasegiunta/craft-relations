@@ -30,6 +30,11 @@ class Relations extends Component
             return [];
         }
 
+        // If no target types are selected
+        if ($targetFields != '*' && !is_array($targetTypes) ) {
+            return [];
+        }
+
         $where = [];
         $where['targetId'] = $element->id;
         
